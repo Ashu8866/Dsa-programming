@@ -1,0 +1,166 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+    {
+        int data;
+        struct node *pre,*next;
+    };
+    struct node *start=NULL;
+    struct node *create()
+        {
+            struct node *t;
+            t=(struct node*)malloc(sizeof(struct node));
+            return(t); 
+        }
+    void DLLaddbeg() 
+        {
+            struct node *new;
+            new=create();
+            new->next=start;
+            if(start!=NULL)
+                {
+                    start->pre=new;
+                }
+                start=new;
+                new->pre=NULL;
+                printf("input the data to add in beggning\n");
+                scanf("%d",&new->data);
+        }
+    void DLLdisplay()
+        {
+            struct node *p;
+            p=start;
+            if(p==NULL)
+                {
+                   printf("No data found\n");
+                }
+            else
+                {
+                    while(p!=NULL)
+                    {
+                        printf("the enterd data is %d\n",p->data);
+                        p=p->next;
+                    }
+                }
+        }
+    void DLLdelbeg()
+        {
+            struct node *p;
+            p=start;
+            if(p==NULL)
+                {
+                    printf("deletion is not possible\n");
+                }
+            else if(p->next==NULL)
+                {
+                    free(p);
+                    p=NULL;
+                }
+            else
+                {
+                    p=start;
+                    start=start->next;
+                    free(p);
+                    start->pre=NULL;
+                }
+        }
+    void DLLaddlast()
+        {
+            struct node *l,*new;
+            if(start==NULL)
+                {
+                    DLLaddbeg();
+                }
+            else
+                {
+                    l=start;
+                    while(l->next!=NULL)
+                    {
+                        l=l->next;
+                    }
+                    new=create();
+                    l->next=new;
+                    new->pre=l;
+                    new->next=NULL;
+                    printf("enter the data to add in last\n");
+                    scanf("%d",&new->data);
+                }
+        }
+    void DLLdellast()
+        {
+            struct node *p,*l;
+            if(start==NULL)
+                {
+                    printf("deletion is not possible\n");
+                }
+            else if(start->next==NULL)
+                {
+                    free(start);
+                    start=NULL;
+                }
+            else
+                {
+                    p=start;
+                    while(p->next!=NULL)
+                    {
+                        p=p->next;
+                    }
+                    p=p->pre;
+                    l=p->next;
+                    free(l);
+                    p->next=NULL;
+                }
+        }
+    void DLLcount()
+        {
+            struct node *p;
+            int c=0;
+            p=start;
+            while(p!=NULL)
+                {
+                    c++;
+                    p=p->next;
+                }
+            printf("THE NUMBER OF NODE IS %d\n",c);
+        }
+    int main()
+        {
+            int ch;
+            while(1)
+            {
+                printf("1 : FOR ADDBEG\n");
+                printf("2 : FOR DISPLAY\n");
+                printf("3 : FOR DELBEG\n");
+                printf("4 : FOR ADDLAST\n");
+                printf("5 : FOR DELLAST\n");
+                printf("6 : FOR COUNT\n");
+                printf("7 : FOR EXIT\n");
+                printf("ENTER THE CHOICE TO PERFORM GIVEN FUNCTION \n");
+                scanf("%d",&ch);
+            switch(ch)
+                    {
+                        case 1:
+                                DLLaddbeg();
+                                break;
+                        case 2:
+                                DLLdisplay();
+                                break;
+                        case 3:
+                                DLLdelbeg();
+                                break;
+                        case 4:
+                                DLLaddlast();
+                                break;
+                        case 5:
+                                DLLdellast();
+                                break;
+                        case 6:
+                                DLLcount();
+                                break;
+                        case 7:
+                                exit(0);
+                        default:
+                                printf("invalid choice\n");
+                    }
+            }    
+        }
